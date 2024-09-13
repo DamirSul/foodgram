@@ -8,6 +8,10 @@ class Ingredient(models.Model):
         max_length=64,
         verbose_name='Название'
     )
+    measurement_unit = models.CharField(
+        verbose_name='Система счисления',
+        max_length=16
+    )
 
     class Meta:
         pass
@@ -77,15 +81,48 @@ class RecipeIngredient(models.Model):
 
 
 class Purchases(models.Model):
-    pass
+    name = models.CharField(
+        verbose_name='Название',
+        max_length=124,
+
+    )
+    image = models.ImageField(
+        verbose_name='Фотография'
+    )
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время приготовления'
+    )
+
 
 
 class Favorites(models.Model):
-    pass
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name='Пользователь',
+        on_delete=models.CASCADE,
+        related_name='favorites'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        unique_together = ('user', 'recipe')
+
 
 
 class Subscriptions(models.Model):
-    pass
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='subscriptions',
+        on_delete=models.CASCADE
+    )
+    subscribed_to = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='subcribers',
+        on_delete=models.CASCADE
+    )
 
 
 class CustomUser(AbstractUser):

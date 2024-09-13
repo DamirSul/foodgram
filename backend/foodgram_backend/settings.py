@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'djoser',
+    'api_foodgram',
+    'food',
 ]
 
 MIDDLEWARE = [
@@ -128,4 +131,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # MY CHANGES
 
-AUTH_USER_MODEL = 'yourapp.CustomUser'
+AUTH_USER_MODEL = 'food.User'

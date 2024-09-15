@@ -7,9 +7,9 @@ from food.models import (
     User,
     Tag,
     Recipe,
-    Purchases,
-    Favorites,
-    Subscriptions,
+    Purchase,
+    Favorite,
+    Subscription,
     Ingredient,
     RecipeIngredient
 )
@@ -56,25 +56,25 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'text', 'cooking_time', 'image', 'ingredients', 'tags')
 
 
-class PurchasesSerializer(serializers.ModelSerializer):
-    
+class PurchaseSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Purchases
+        model = Purchase
         fields = ('id', 'name', 'image', 'cooking_time')
 
 
-class FavoritesSerializer(serializers.ModelSerializer):
+class FavoriteSerializer(serializers.ModelSerializer):
     recipe = RecipeSerializer(read_only=True)
 
     class Meta:
-        model = Favorites
+        model = Favorite
         fields = ('id', 'user', 'recipe')
 
 
-class SubscriptionsSerializer(serializers.ModelSerializer):
+class SubscriptionSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     subscribed_to = UserSerializer(read_only=True)
 
     class Meta:
-        model = Subscriptions
+        model = Subscription
         fields = ('id', 'user', 'subscribed_to')

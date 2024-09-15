@@ -80,11 +80,10 @@ class RecipeIngredient(models.Model):
 
 
 
-class Purchases(models.Model):
+class Purchase(models.Model):
     name = models.CharField(
         verbose_name='Название',
         max_length=124,
-
     )
     image = models.ImageField(
         verbose_name='Фотография'
@@ -95,7 +94,7 @@ class Purchases(models.Model):
 
 
 
-class Favorites(models.Model):
+class Favorite(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name='Пользователь',
@@ -112,7 +111,7 @@ class Favorites(models.Model):
 
 
 
-class Subscriptions(models.Model):
+class Subscription(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='subscriptions',

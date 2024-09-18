@@ -1,5 +1,4 @@
 from django.urls import include, path
-from django.urls import include, path
 from rest_framework import routers
 
 from .views import (
@@ -9,9 +8,10 @@ from .views import (
     RecipeViewSet,
     PurchaseViewSet,
     SubscriptionViewSet,
-    IngredientViewSet
+    IngredientViewSet,
+    
 )
-
+from .views import UserTokenObtainView
 app_name = 'api_v1'
 
 router_v1 = routers.DefaultRouter()
@@ -22,7 +22,10 @@ router_v1.register('ingredients', IngredientViewSet, basename='ingredients')
 
 
 api_v1 = [
-    path('', include(router_v1.urls))
+    path('', include(router_v1.urls)),
+    path('auth/', include('djoser.urls')),  # Для регистрации и работы с пользователями
+    path('auth/', include('djoser.urls.authtoken')),  # Для получения токенов
+    # path('auth/token/login/', LoginView, name='token_obtain'),
 ]
 
 urlpatterns = [

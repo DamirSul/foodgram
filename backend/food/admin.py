@@ -12,12 +12,12 @@ from .models import (
 )
 
 admin.site.register(
-    User,
+    (User,
     Tag,
     Recipe,
     Purchase,
     Favorite,
     Subscription,
     Ingredient,
-    RecipeIngredient
+    RecipeIngredient)
 )

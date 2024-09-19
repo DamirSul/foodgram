@@ -105,6 +105,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
+# Ingredient ViewSet
+class IngredientViewSet(viewsets.ModelViewSet):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+
+# RecipeIngredient ViewSet
+class RecipeIngredientViewSet(viewsets.ModelViewSet):
+    queryset = RecipeIngredient.objects.all()
+    serializer_class = RecipeIngredientSerializer
+    
 # Purchase ViewSet
 class PurchaseViewSet(viewsets.ModelViewSet):
     queryset = Purchase.objects.all()
@@ -115,13 +125,5 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
-# Ingredient ViewSet
-class IngredientViewSet(viewsets.ModelViewSet):
-    queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
 
-# RecipeIngredient ViewSet
-class RecipeIngredientViewSet(viewsets.ModelViewSet):
-    queryset = RecipeIngredient.objects.all()
-    serializer_class = RecipeIngredientSerializer
 

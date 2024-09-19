@@ -1,8 +1,11 @@
+import base64
+
 from rest_framework import serializers, status, validators
 from rest_framework.relations import SlugRelatedField
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
+from django.core.files.base import ContentFile
 from djoser.serializers import UserCreateSerializer, TokenCreateSerializer
 from food.models import (
     User,
@@ -18,8 +21,6 @@ from food.models import (
 
 
 User = get_user_model()
-import base64
-from django.core.files.base import ContentFile
 
 class Base64ImageField(serializers.ImageField):
     def to_internal_value(self, data):
@@ -45,65 +46,6 @@ class CustomTokenCreateSerializer(TokenCreateSerializer):
     class Meta:
         model = User
         fields = ['email', 'password']
-
-    # def create(self, validated_data):
-    #     user = User(
-    #         email=validated_data['email'],
-    #         username=validated_data['username']
-    #     )
-    #     user.set_password(validated_data['password'])
-    #     user.save()
-    #     return user
-
-    # def validate(self, attrs):
-    #     email = attrs.get('email')
-    #     password = attrs.get('password')
-
-    #     if email and password:
-    #         user = authenticate(request=self.context.get('request'), email=email, password=password)
-    #     else:
-    #         raise serializers.ValidationError('Must include "email" and "password".')
-
-    #     attrs['user'] = user
-    #     return attrs
-
-# class CustomUserCreateSerializer(UserCreateSerializer):
-#     username = serializers.CharField(required=True)
-#     email = serializers.EmailField(required=True)
-#     first_name = serializers.CharField(required=True)
-#     last_name = serializers.CharField(required=True)
-#     password = serializers.CharField(write_only=True, required=True)
-#     class Meta(UserCreateSerializer.Meta):
-#         model = User
-#         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password')
-
-#     def create(self, validated_data):
-#         password = validated_data.pop('password', None)
-#         user = super().create(validated_data)
-#         if password:
-#             user.set_password(password)
-#             user.save()
-#         return user
-
-# class UserLoginSerializer(serializers.Serializer):
-#     email = serializers.EmailField()
-#     password = serializers.CharField(write_only=True)
-
-#     def validate(self, attrs):
-#         email = attrs.get('email')
-#         password = attrs.get('password')
-#         user = authenticate(email=email, password=password)
-#         print(user)
-#         if user is None:
-#             print('ERRRROOOOOOOOOOOR')
-#             raise serializers.ValidationError("Unable to log in with provided credentials.")
-#         attrs['user'] = user
-#         return attrs
-
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'is_subscribed', 'avatar')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -138,7 +80,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
-    ingredient = IngredientSerializer()  # Принимаем название ингредиента, а не ID
+    ingredient = IngredientSerializer()
 
     class Meta:
         model = RecipeIngredient
@@ -146,7 +88,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = RecipeIngredientSerializer(many=True, source='recipeingredient_set')
+    ingredients = RecipeIngredientSerializer(many=True)
     tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
     image = Base64ImageField(required=False, allow_null=True)
 
@@ -154,24 +96,17 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ('id', 'name', 'text', 'cooking_time', 'image', 'ingredients', 'tags')
 
-# class RecipeIngredientSerializer(serializers.ModelSerializer):
-#     ingredient = IngredientSerializer(read_only=True)
-#     tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
-#     image = Base64ImageField(required=False, allow_null=True)
+    def create(self, validated_data):
+        ingredients_data = validated_data.pop('ingredients')
+        recipe = Recipe.objects.create(**validated_data)
 
-#     class Meta:
-#         model = RecipeIngredient
-#         fields = ('ingredient', 'amount')
-
-
-# class RecipeSerializer(serializers.ModelSerializer):
-#     ingredients = RecipeIngredientSerializer(many=True, source='recipeingredient_set', read_only=True)
-#     tags = TagSerializer(many=True, read_only=True)
-#     image = Base64ImageField(required=False, allow_null=True)
-
-#     class Meta:
-#         model = Recipe
-#         fields = ('id', 'name', 'text', 'cooking_time', 'image', 'ingredients', 'tags')
+        for ingredient_data in ingredients_data:
+            RecipeIngredient.objects.create(
+                recipe=recipe,
+                ingredient=ingredient_data['ingredient']['id'],
+                amount=ingredient_data['amount']
+            )
+        return recipe
 
 
 class PurchaseSerializer(serializers.ModelSerializer):

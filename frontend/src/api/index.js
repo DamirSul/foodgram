@@ -160,7 +160,7 @@ class Api {
   getRecipe({ recipe_id }) {
     const token = localStorage.getItem("token");
     const authorization = token ? { authorization: `Token ${token}` } : {};
-    return fetch(`/api/recipes/${recipe_id}/`, {
+    return fetch(`/api/v1/recipes/${recipe_id}/`, {
       method: "GET",
       headers: {
         ...this._headers,

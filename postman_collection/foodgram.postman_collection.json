@@ -3933,7 +3933,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4044,7 +4044,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4155,7 +4155,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4266,7 +4266,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4392,7 +4392,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4550,7 +4550,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4680,7 +4680,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/",
+									"raw": "{{baseUrl}}/api/v1/recipes/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4821,7 +4821,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/?limit=2",
+									"raw": "{{baseUrl}}/api/v1/recipes/?limit=2",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4975,7 +4975,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/?author={{userId}}",
+									"raw": "{{baseUrl}}/api/v1/recipes/?author={{userId}}",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5148,7 +5148,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/?tags={{secondTagSlug}}&tags={{thirdTagSlug}}",
+									"raw": "{{baseUrl}}/api/v1/recipes/?tags={{secondTagSlug}}&tags={{thirdTagSlug}}",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5270,7 +5270,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5383,7 +5383,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5452,7 +5452,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/get-link/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/get-link/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5505,7 +5505,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/get-link/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/get-link/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5633,7 +5633,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5701,7 +5701,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -5760,7 +5760,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -5819,7 +5819,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -5878,7 +5878,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -5937,7 +5937,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -5996,7 +5996,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6055,7 +6055,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6114,7 +6114,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6173,7 +6173,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6232,7 +6232,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6291,7 +6291,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6350,7 +6350,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6409,7 +6409,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6468,7 +6468,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6527,7 +6527,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6586,7 +6586,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6645,7 +6645,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6704,7 +6704,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6763,7 +6763,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6810,7 +6810,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/",
+											"raw": "{{baseUrl}}/api/v1/recipes/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6874,7 +6874,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6922,7 +6922,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -6982,7 +6982,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7042,7 +7042,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7102,7 +7102,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7163,7 +7163,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7223,7 +7223,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7283,7 +7283,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7343,7 +7343,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7403,7 +7403,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7463,7 +7463,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7523,7 +7523,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7583,7 +7583,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7643,7 +7643,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7703,7 +7703,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7763,7 +7763,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7823,7 +7823,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -7883,7 +7883,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/9876/",
+											"raw": "{{baseUrl}}/api/v1/recipes/9876/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -8776,7 +8776,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/shopping_cart/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/shopping_cart/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -8834,7 +8834,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/download_shopping_cart/",
+									"raw": "{{baseUrl}}/api/v1/recipes/download_shopping_cart/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -8878,7 +8878,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/shopping_cart/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/shopping_cart/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -8930,7 +8930,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/shopping_cart/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/shopping_cart/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -8983,7 +8983,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/9876/shopping_cart/",
+									"raw": "{{baseUrl}}/api/v1/recipes/9876/shopping_cart/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -9095,7 +9095,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/favorite/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/favorite/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -9140,7 +9140,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/favorite/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/favorite/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -9192,7 +9192,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/favorite/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/favorite/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -9245,7 +9245,7 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/9876/favorite/",
+									"raw": "{{baseUrl}}/api/v1/recipes/9876/favorite/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -9438,7 +9438,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/recipes/?is_in_shopping_cart=1",
+							"raw": "{{baseUrl}}/api/v1/recipes/?is_in_shopping_cart=1",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -9563,7 +9563,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/recipes/?is_in_shopping_cart=1",
+							"raw": "{{baseUrl}}/api/v1/recipes/?is_in_shopping_cart=1",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -9665,7 +9665,7 @@
 									"pm.test(\"Статус-код ответа должен быть 200\", function () {",
 									"    pm.expect(",
 									"        pm.response.status,",
-									"        \"GET-запрос зарегистрированного пользователя к `/api/recipes/` должен вернуть ответ со статус-кодом 200\"",
+									"        \"GET-запрос зарегистрированного пользователя к `/api/v1/recipes/` должен вернуть ответ со статус-кодом 200\"",
 									"    ).to.be.eql(\"OK\");",
 									"});",
 									"pm.test('Структура ответа должна соответствовать ожидаемой', function () {",
@@ -9716,7 +9716,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/recipes/?is_favorited=1",
+							"raw": "{{baseUrl}}/api/v1/recipes/?is_favorited=1",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -9841,7 +9841,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/recipes/?is_favorited=1",
+							"raw": "{{baseUrl}}/api/v1/recipes/?is_favorited=1",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -10154,7 +10154,7 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/shopping_cart/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/shopping_cart/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10206,7 +10206,7 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/shopping_cart/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/shopping_cart/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10258,7 +10258,7 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/9876/shopping_cart/",
+											"raw": "{{baseUrl}}/api/v1/recipes/9876/shopping_cart/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10312,7 +10312,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/shopping_cart/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/shopping_cart/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -10361,7 +10361,7 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/favorite/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/favorite/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10413,7 +10413,7 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/favorite/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/favorite/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10465,7 +10465,7 @@
 										"method": "DELETE",
 										"header": [],
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/9876/favorite/",
+											"raw": "{{baseUrl}}/api/v1/recipes/9876/favorite/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10519,7 +10519,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/favorite/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/favorite/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -10576,7 +10576,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{fifthRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{fifthRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10636,7 +10636,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/{{fifthRecipeId}}/",
+											"raw": "{{baseUrl}}/api/v1/recipes/{{fifthRecipeId}}/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10696,7 +10696,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/recipes/9876/",
+											"raw": "{{baseUrl}}/api/v1/recipes/9876/",
 											"host": [
 												"{{baseUrl}}"
 											],
@@ -10758,7 +10758,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{firstRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{firstRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -10818,7 +10818,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{secondRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{secondRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -10878,7 +10878,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{thirdRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{thirdRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -10938,7 +10938,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{fourthRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{fourthRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -10998,7 +10998,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/recipes/{{fifthRecipeId}}/",
+									"raw": "{{baseUrl}}/api/v1/recipes/{{fifthRecipeId}}/",
 									"host": [
 										"{{baseUrl}}"
 									],

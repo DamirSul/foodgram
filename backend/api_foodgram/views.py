@@ -111,9 +111,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
     permission_classes = [IsAuthenticated]  # Только аутентифицированные пользователи
 
-    # def perform_create(self, serializer):
-    #     # Передаем текущего пользователя как автора рецепта
-    #     serializer.save(author=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 # Ingredient ViewSet
 class IngredientViewSet(viewsets.ModelViewSet):

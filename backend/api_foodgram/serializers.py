@@ -73,58 +73,61 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Ingredient
         fields = ('id', 'name', 'measurement_unit')
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
-    id = serializers.PrimaryKeyRelatedField(source='ingredient', queryset=Ingredient.objects.all())
+    ingredient = serializers.PrimaryKeyRelatedField(queryset=Ingredient.objects.all())
 
     class Meta:
         model = RecipeIngredient
-        fields = ('id', 'amount')  # id ссылается на Ingredient, а amount на RecipeIngredient
-
-
+        fields = ['id', 'ingredient', 'amount'] 
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = RecipeIngredientSerializer(many=True)
-    tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
+    #ingredients = RecipeIngredientSerializer(many=True)
+    #tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
     image = Base64ImageField(required=False, allow_null=True)
 
     class Meta:
         model = Recipe
-        fields = ('id', 'name', 'text', 'cooking_time', 'image', 'ingredients', 'tags')
+        fields = ['id', 'name', 'text', 'cooking_time', 'image', 'ingredients', 'tags']
 
-    def validate(self, data):
-        print("Validation step:", data)
-        return data
-    
-    def create(self, validated_data):
-        # Убираем ингредиенты и теги из валидированных данных
-        ingredients_data = validated_data.pop('ingredients')
-        tags_data = validated_data.pop('tags')
 
-        # Извлекаем текущего пользователя (автора рецепта) из контекста запроса
-        user = self.context['request'].user
+    # def create(self, validated_data):
+    #     print("Creating recipe...")  # Отладочный вывод
+    #     ingredients_data = validated_data.pop('ingredients')
+    #     tags_data = validated_data.pop('tags')
+    #     user = self.context['request'].user
 
-        # Создаем рецепт с автором
-        recipe = Recipe.objects.create(author=user, **validated_data)
+    #     recipe = Recipe.objects.create(author=user, **validated_data)
+    #     recipe.tags.set(tags_data)
 
-        # Устанавливаем теги
-        recipe.tags.set(tags_data)
+    #     for ingredient_data in ingredients_data:
+    #         ingredient_id = ingredient_data['ingredient']
+    #         print(f"Ingredient ID: {ingredient_id}")  # Отладочный вывод
+    #         ingredient = Ingredient.objects.get(id=ingredient_id)
 
-        # Обрабатываем ингредиенты
-        for ingredient_data in ingredients_data:
-            RecipeIngredient.objects.create(
-                recipe=recipe,
-                ingredient=ingredient_data['ingredient'],  # Используйте 'ingredient', так как у нас 'source'
-                amount=ingredient_data['amount']           # Количество ингредиента
-            )
+    #         RecipeIngredient.objects.create(
+    #             recipe=recipe,
+    #             ingredient=ingredient,
+    #             amount=ingredient_data['amount']
+    #         )
 
-        return recipe
+    #     return recipe
+
+
+
+
+
+
+
+
+
+
+
 
 
 

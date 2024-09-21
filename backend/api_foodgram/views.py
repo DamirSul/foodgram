@@ -100,10 +100,20 @@ class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
-# Recipe ViewSet
+# # Recipe ViewSet
+# class RecipeViewSet(viewsets.ModelViewSet):
+#     queryset = Recipe.objects.all()
+#     serializer_class = RecipeSerializer
+from rest_framework.permissions import IsAuthenticated
+
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+    permission_classes = [IsAuthenticated]  # Только аутентифицированные пользователи
+
+    # def perform_create(self, serializer):
+    #     # Передаем текущего пользователя как автора рецепта
+    #     serializer.save(author=self.request.user)
 
 # Ingredient ViewSet
 class IngredientViewSet(viewsets.ModelViewSet):
@@ -115,6 +125,8 @@ class RecipeIngredientViewSet(viewsets.ModelViewSet):
     queryset = RecipeIngredient.objects.all()
     serializer_class = RecipeIngredientSerializer
     
+
+
 # Purchase ViewSet
 class PurchaseViewSet(viewsets.ModelViewSet):
     queryset = Purchase.objects.all()

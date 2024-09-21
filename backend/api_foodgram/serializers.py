@@ -80,11 +80,13 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
-    ingredient = IngredientSerializer()
+    id = serializers.PrimaryKeyRelatedField(source='ingredient', queryset=Ingredient.objects.all())
 
     class Meta:
         model = RecipeIngredient
-        fields = ('ingredient', 'amount')
+        fields = ('id', 'amount')  # id ссылается на Ingredient, а amount на RecipeIngredient
+
+
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -96,17 +98,50 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ('id', 'name', 'text', 'cooking_time', 'image', 'ingredients', 'tags')
 
+    def validate(self, data):
+        print("Validation step:", data)
+        return data
+    
     def create(self, validated_data):
+        # Убираем ингредиенты и теги из валидированных данных
         ingredients_data = validated_data.pop('ingredients')
-        recipe = Recipe.objects.create(**validated_data)
+        tags_data = validated_data.pop('tags')
 
+        # Извлекаем текущего пользователя (автора рецепта) из контекста запроса
+        user = self.context['request'].user
+
+        # Создаем рецепт с автором
+        recipe = Recipe.objects.create(author=user, **validated_data)
+
+        # Устанавливаем теги
+        recipe.tags.set(tags_data)
+
+        # Обрабатываем ингредиенты
         for ingredient_data in ingredients_data:
             RecipeIngredient.objects.create(
                 recipe=recipe,
-                ingredient=ingredient_data['ingredient']['id'],
-                amount=ingredient_data['amount']
+                ingredient=ingredient_data['ingredient'],  # Используйте 'ingredient', так как у нас 'source'
+                amount=ingredient_data['amount']           # Количество ингредиента
             )
+
         return recipe
+
+
+
+
+
+
+
+
+
+# class RecipeIngredientSerializer(serializers.ModelSerializer):
+#     ingredient = IngredientSerializer() PK
+
+#     class Meta:
+#         model = RecipeIngredient
+#         fields = ('ingredient', 'amount')
+
+
 
 
 class PurchaseSerializer(serializers.ModelSerializer):

@@ -53,7 +53,7 @@ class UserTokenObtainView(views.APIView):
         return Response({'token': token.key}, status=status.HTTP_200_OK)
 
     
-
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -100,19 +100,14 @@ class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
-# # Recipe ViewSet
-# class RecipeViewSet(viewsets.ModelViewSet):
-#     queryset = Recipe.objects.all()
-#     serializer_class = RecipeSerializer
-from rest_framework.permissions import IsAuthenticated
 
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
-    permission_classes = [IsAuthenticated]  # Только аутентифицированные пользователи
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        return serializer.save(author=self.request.user)
 
 
 # Ingredient ViewSet

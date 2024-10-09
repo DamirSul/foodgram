@@ -1,23 +1,49 @@
 from django.contrib import admin
-
-from .models import (
-    User,
-    Tag,
-    Recipe,
-    Purchase,
-    Favorite,
-    Subscription,
-    Ingredient,
-    RecipeIngredient
-)
+from django.db.models import Count
+from users.models import User
+from food.models import *
 
 admin.site.register(
-    (User,
-    Tag,
-    Recipe,
-    Purchase,
+    (
+    ShoppingCart,
     Favorite,
     Subscription,
-    Ingredient,
-    RecipeIngredient)
+    RecipeIngredient,
+    RecipeTag
+    ), admin.ModelAdmin
 )
+
+class UserAdmin(admin.ModelAdmin):
+    search_fields = ['email', 'username']
+
+class RecipeIngredientInline(admin.TabularInline):
+    model = RecipeIngredient
+    extra = 1  # Указываем количество пустых строк для добавления новых ингредиентов
+
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'author', 'favorite_count')
+    search_fields = ['name', 'author__username']
+    list_filter = ('tags',)
+    inlines = [RecipeIngredientInline]  # Добавляем Inline для ингредиентов
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.annotate(favorite_count=Count('favorited_by'))
+        return qs
+
+    def favorite_count(self, obj):
+        return obj.favorite_count
+    favorite_count.short_description = 'Количество в избранном'
+
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ('name', 'measurement_unit')
+    search_fields = ['name']
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ['name']
+
+admin.site.register(User, UserAdmin)
+admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Tag, TagAdmin)

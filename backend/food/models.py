@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.conf import settings
+
+from backend.settings import AUTH_USER_MODEL
+from users.models import User
 
 
 class Ingredient(models.Model):
@@ -50,7 +51,7 @@ class Tag(models.Model):
 
 class Recipe(models.Model):
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        AUTH_USER_MODEL,
         related_name='recipes',
         on_delete=models.CASCADE
     )
@@ -62,16 +63,26 @@ class Recipe(models.Model):
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления'
     )
-    image = models.ImageField(verbose_name='Фотография')
+    image = models.ImageField(verbose_name='Фотография', upload_to='recipes/images/')
     ingredients = models.ManyToManyField(
         Ingredient,
         through='RecipeIngredient',
-        verbose_name='Список ингредиентов'
+        verbose_name='Список ингредиентов',
+        related_name='recipes'
     )
     tags = models.ManyToManyField(
         Tag,
         verbose_name='Теги'
     )
+    is_favorited = models.BooleanField(
+        default=False,
+        verbose_name='В списке избранного'
+    )
+    is_in_shopping_cart = models.BooleanField(
+        default=False,
+        verbose_name='В списке покупок'
+    )
+    favorited_by = models.ManyToManyField(User, related_name='favorited_recipes_list', blank=True)
 
     class Meta:
         verbose_name = 'Рецепт'
@@ -81,64 +92,47 @@ class Recipe(models.Model):
 
 
 
-
-class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(
-        Recipe,
-        on_delete=models.CASCADE
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='subscriptions'
     )
-    ingredient = models.ForeignKey(
-        Ingredient,
-        on_delete=models.CASCADE
+    author = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='subscribers'
     )
-    amount = models.PositiveIntegerField(
-        verbose_name='Количество'
-    )
+    recipes = models.ManyToManyField('Recipe', related_name='subscribers', blank=True)
+    recipe_count = models.PositiveIntegerField(default=0)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['recipe', 'ingredient'],
-                name='unique_recipe_ingredient'
-            )
-        ]
-        verbose_name = 'Рецепты и Ингредиенты'
-        verbose_name_plural = 'Рецепты и Ингредиенты'
-    
+        unique_together = ('user', 'author')  # Обеспечивает уникальность подписок
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+
     def __str__(self):
-        return f'{self.ingredient.name} ({self.amount})'
+        return f"{self.user.username} подписан на {self.author.username}"
 
-
-
-
-class Purchase(models.Model):
-    name = models.CharField(
-        verbose_name='Название',
-        max_length=124,
-    )
-    image = models.ImageField(
-        verbose_name='Фотография'
-    )
-    cooking_time = models.PositiveSmallIntegerField(
-        verbose_name='Время приготовления'
-    )
-
-    class Meta:
-        verbose_name = 'Список покупок'
-        verbose_name_plural = 'Списки покупок'
+    def save(self, *args, **kwargs):
+        # Если подписка сохранена, обновляем количество рецептов
+        if self.pk is not None:
+            self.recipe_count = self.recipes.count()
+        super().save(*args, **kwargs)
 
 
 
 class Favorite(models.Model):
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        AUTH_USER_MODEL,
         verbose_name='Пользователь',
         on_delete=models.CASCADE,
-        related_name='favorites'
+        related_name='favorites_list'
     )
     recipe = models.ForeignKey(
         Recipe,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='favorited_recipes'
     )
 
     class Meta:
@@ -152,72 +146,75 @@ class Favorite(models.Model):
         verbose_name_plural = 'Избранное'
 
 
-class Subscription(models.Model):
+class ShoppingCart(models.Model):
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='subscriptions',
-        on_delete=models.CASCADE
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name='Название',
+        max_length=124,
+        related_name = 'shopping_cart'
     )
-    subscribed_to = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='subcribers',
-        on_delete=models.CASCADE
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='in_shopping_cart'
     )
+    # cooking_time = models.PositiveSmallIntegerField(
+    #     verbose_name='Время приготовления'
+    # )
 
     class Meta:
-        verbose_name = 'Подписка'
-        verbose_name_plural = 'Подписки'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'recipe'],
+                name='unique_recipe_author'
+            )
+        ]
+        verbose_name = 'Список покупок'
+        verbose_name_plural = 'Списки покупок'
 
 
-class User(AbstractUser):
-    email = models.EmailField(
-        verbose_name='Адрес электронной почты',
-        max_length=128,
-        unique=True,
-        help_text=(
-            f'Адрес электронной почты, не более 128 символов'
-        ),
-    )
-    username = models.CharField(
-        verbose_name='Имя пользователя',
-        max_length=64,
-        unique=True,
-    )
-    first_name = models.CharField(
-        verbose_name='Имя Отчество',
-        max_length=128,
-        blank=True,
-        null=True,
-        help_text=(
-            f'Имя Отчество, не более 128 символов'
-        ),
-    )
-    last_name = models.CharField(
-        verbose_name='Фамилия',
-        max_length=128,
-        blank=True,
-        null=True,
-        help_text=(
-            f'Фамилия, не более 128 символов'
-        ),
-    )
-    is_subscribed = models.BooleanField(
-        default=False,
-        verbose_name='Подписка'
-    )
-    avatar = models.URLField(
-        verbose_name='Аватар',
-        max_length=200,
-        blank=True,
-        null=True
-    )
-
-    USERNAME_FIELD = 'email'  # Аутентификация через email
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_ingredients')
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    amount = models.PositiveIntegerField(verbose_name='Количество')
 
     class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        default_related_name = 'recipe_ingredients'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['recipe', 'ingredient'],
+                name='unique_recipe_ingredient'
+            )
+        ]
+        verbose_name = 'Рецепты и ингредиенты'
+        verbose_name_plural = 'Рецепты и ингредиенты'
 
     def __str__(self):
-        return self.username
+        return f"{self.ingredient.name} - {self.amount}"
+
+
+class RecipeTag(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['recipe', 'tag'],
+                name='unique_recipe_tag'
+            )
+        ]
+        verbose_name = 'Рецепты и теги'
+        verbose_name_plural = 'Рецепты и теги'
+
+    def __str__(self):
+        return f"{self.recipe.name} - {self.tag.name}"
+    
+
+class ShortLink(models.Model):
+    recipe = models.ForeignKey('Recipe', on_delete=models.CASCADE)
+    short_code = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return f"{self.short_code} -> {self.recipe.name}"

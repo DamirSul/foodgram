@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 const Favorites = () => {
   const history = useHistory();
 
-  const handleClick = () => history.replace("/api/v1/recipes");
+  const handleClick = () => history.replace("/recipes");
 
   return (
     <Main className={styles.root}>

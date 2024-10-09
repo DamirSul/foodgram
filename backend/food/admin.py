@@ -18,13 +18,13 @@ class UserAdmin(admin.ModelAdmin):
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
-    extra = 1  # Указываем количество пустых строк для добавления новых ингредиентов
+    extra = 1
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name', 'author', 'favorite_count')
     search_fields = ['name', 'author__username']
     list_filter = ('tags',)
-    inlines = [RecipeIngredientInline]  # Добавляем Inline для ингредиентов
+    inlines = [RecipeIngredientInline]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

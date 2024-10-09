@@ -107,7 +107,7 @@ class Subscription(models.Model):
     recipe_count = models.PositiveIntegerField(default=0)
 
     class Meta:
-        unique_together = ('user', 'author')  # Обеспечивает уникальность подписок
+        unique_together = ('user', 'author')
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
 
@@ -115,7 +115,6 @@ class Subscription(models.Model):
         return f"{self.user.username} подписан на {self.author.username}"
 
     def save(self, *args, **kwargs):
-        # Если подписка сохранена, обновляем количество рецептов
         if self.pk is not None:
             self.recipe_count = self.recipes.count()
         super().save(*args, **kwargs)
@@ -159,9 +158,6 @@ class ShoppingCart(models.Model):
         on_delete=models.CASCADE,
         related_name='in_shopping_cart'
     )
-    # cooking_time = models.PositiveSmallIntegerField(
-    #     verbose_name='Время приготовления'
-    # )
 
     class Meta:
         constraints = [

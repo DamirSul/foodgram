@@ -1,26 +1,22 @@
 import base64
 
-from rest_framework import serializers, status
 from django.core.files.base import ContentFile
+from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
-from food.models import Ingredient, Tag, Recipe, Subscription, Favorite, ShoppingCart, RecipeIngredient, RecipeTag
+
+from food.models import Ingredient, Tag, Recipe, Subscription, Favorite, ShoppingCart, RecipeIngredient
 from users.models import User
-from rest_framework.response import Response
 
 class Base64ImageField(serializers.ImageField):
 
     def to_internal_value(self, data):
-        # Если данные пустые, возвращаем пустое значение
         if not data:
             return super().to_internal_value(data)
 
-        # Если данные в формате Base64, декодируем их
         if isinstance(data, str):
-            # Проверяем, содержит ли строка метаданные
             if data.startswith('data:image'):
                 format, imgstr = data.split(';base64,')
                 ext = format.split('/')[-1]
-                # Создаем временный файл
                 data = ContentFile(base64.b64decode(imgstr), name=f'temp.{ext}')
 
         return super().to_internal_value(data)
@@ -49,7 +45,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = RecipeIngredientSerializer(many=True, source='recipe_ingredients')
     tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all(), write_only=True)
-    image = Base64ImageField(required=True)  # Поле image обязательно
+    image = Base64ImageField(required=True)
     author = serializers.ReadOnlyField(source='author.username')
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
@@ -61,17 +57,13 @@ class RecipeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         request = self.context.get('request')
         
-        # Проверяем, что это запрос на избранное
         if request and 'favorite' in request.path:
-            # Возвращаем только необходимые данные для запроса на добавление в избранное
             return {
                 'id': instance.id,
                 'name': instance.name,
                 'image': request.build_absolute_uri(instance.image.url) if instance.image else None,
                 'cooking_time': instance.cooking_time,
             }
-
-        # Для остальных запросов возвращаем полное представление
         representation = super().to_representation(instance)
         representation['tags'] = TagSerializer(instance.tags.all(), many=True).data
         representation['author'] = {
@@ -108,7 +100,6 @@ class RecipeSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Ингредиенты не должны повторяться.")
             ingredient_ids.append(ingredient_data['ingredient']['id'])
 
-            # Проверка существования ингредиента
             try:
                 Ingredient.objects.get(id=ingredient_data['ingredient']['id'])
             except Ingredient.DoesNotExist:
@@ -216,20 +207,16 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
 
-        # Проверяем, что это запрос на подписки
         request = self.context.get('request')
 
-
         if request and ('subscriptions' in request.path or 'subscribe' in request.path):
-            # Добавляем рецепты и их количество только для подписок
             recipes = Recipe.objects.filter(author=instance)
             recipes_limit = request.query_params.get('recipes_limit', None)
             if recipes_limit is not None:
                 try:
                     recipes_limit = int(recipes_limit)
-                    recipes = recipes[:recipes_limit]  # Ограничиваем количество рецептов
+                    recipes = recipes[:recipes_limit]
                 except ValueError:
-                    # Если не удалось преобразовать в int, используем все рецепты
                     pass
             representation['recipes'] = [
                 {
@@ -243,9 +230,6 @@ class UserSerializer(serializers.ModelSerializer):
             representation['recipes_count'] = recipes.count()
 
         return representation
-
-
-
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
@@ -265,10 +249,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        #print(instance.ingredients)
-        # Получаем информацию о тегах
-        representation['tags'] = TagSerializer(instance.tags.all(), many=True).data  # Используем TagSerializer
-        #representation['author'] = UserSerializer(instance.author, read_only=True).data
+        representation['tags'] = TagSerializer(instance.tags.all(), many=True).data
         representation['author'] = {
             'id': instance.author.id,
             'username': instance.author.username,
@@ -276,7 +257,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
             'last_name': instance.author.last_name,
             'email': instance.author.email,
             'is_subscribed': instance.author.is_subscribed,
-            'avatar': instance.author.avatar.url if instance.author.avatar else None,  # Проверяем наличие аватара
+            'avatar': instance.author.avatar.url if instance.author.avatar else None,
         }
 
 class ShoppingCartSerializer(serializers.ModelSerializer):

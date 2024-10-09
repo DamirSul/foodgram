@@ -96,13 +96,12 @@ AUTH_USER_MODEL = 'users.User'
 DJOSER = {
     'LOGIN_FIELD': 'email',
 }
-CORS_ORIGIN_ALLOW_ALL = True  # Временно для отладки
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # URL вашего фронтенд-сервера
+    "http://localhost:3000",
     'http://127.0.0.1:8000',
 ]
-CORS_ORIGIN_ALLOW_ALL = True  # Временно для отладки
+CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

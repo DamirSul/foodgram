@@ -1,34 +1,29 @@
-from django.shortcuts import render
-from djoser import views as djoser_views
-from rest_framework import status, viewsets, permissions
-from rest_framework.response import Response
-from rest_framework.exceptions import PermissionDenied
-from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework import status
-from rest_framework.exceptions import ValidationError
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
-from django.db.models import Exists, OuterRef
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from django.db.models import Value
-from django.db.models.functions import Coalesce
-from django.db import models
-from food.models import Ingredient, Tag, Recipe, Subscription, Favorite, ShoppingCart
-from users.models import User
-from .serializers import IngredientSerializer, TagSerializer, RecipeSerializer, FavoriteSerializer, UserSerializer, ShoppingCartSerializer
-from rest_framework.decorators import action
-from .pagination import RecipePagination, SubscriptionPagination
-from django.http import HttpResponse
-from django.conf import settings
 import random
 import string
-from food.models import ShortLink
+import base64
+
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.core.files.base import ContentFile
-import base64
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Value
+from django.db import models
+from django.http import HttpResponse
+from django.conf import settings
+
+from django_filters.rest_framework import DjangoFilterBackend
+from djoser import views as djoser_views
+from rest_framework import status, viewsets, permissions, filters
+from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.filters import SearchFilter
+from rest_framework.decorators import action
+
+from food.models import Ingredient, Tag, Recipe, Subscription, Favorite, ShoppingCart, ShortLink
+from users.models import User
+from .serializers import IngredientSerializer, TagSerializer, RecipeSerializer, FavoriteSerializer, UserSerializer
+from .pagination import RecipePagination, SubscriptionPagination
+
 
 class UserViewSet(djoser_views.UserViewSet):
     queryset = User.objects.all()

@@ -1,0 +1,37 @@
+version: '3'
+
+volumes:
+  pg_data:
+  static:
+  media:
+
+services:
+  db:
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  backend:
+    image: damirdockerr/foodgram_backend
+    env_file: .env
+    volumes:
+      - static:/backend_static/
+      - media:/media/
+  frontend:
+    image: damirdockerr/foodgram_frontend
+    env_file: .env
+    command: cp -r /app/build/. /static/
+    volumes:
+      - static:/frontend_static
+  gateway:
+    image: damirdockerr/foodgram_gateway
+    env_file: .env
+    volumes:
+      - static:/static/
+      - media:/media/
+    ports:
+      - 8000:80
+
+networks:
+  default:
+    name: foodgram_default

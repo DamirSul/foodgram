@@ -3,7 +3,6 @@ import string
 import base64
 
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
 from django.core.files.base import ContentFile
 from django.db.models import Exists, OuterRef, Value
 from django.db import models

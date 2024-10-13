@@ -309,17 +309,14 @@ class RecipeViewSet(viewsets.ModelViewSet):
         short_url = f"https://{settings.SITE_DOMAIN}/s/{short_link.short_code}"
         
         return Response({"short-link": short_url}, status=status.HTTP_200_OK)
-        
-
-from django.http import HttpResponseNotFound
 
 
 def redirect_to_recipe(request, short_code):
-    print(f"Redirecting short_code: {short_code}")  # Для отладки
+    print(f"Redirecting short_code: {short_code}")
     short_link = get_object_or_404(ShortLink, short_code=short_code)
     
     recipe_url = reverse('recipes-detail', kwargs={'pk': short_link.recipe.id})
-    print(f"Redirecting to recipe URL: {recipe_url}")  # Для отладки
+    print(f"Redirecting to recipe URL: {recipe_url}")
     
     return redirect(recipe_url)
 

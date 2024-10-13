@@ -11,3 +11,4 @@ PyYAML==6.0
 python-dotenv
 django-cors-headers
 django-filter
+python-dotenv

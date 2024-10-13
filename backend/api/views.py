@@ -424,12 +424,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 def redirect_to_recipe(request, short_code):
-    print(f"Redirecting short_code: {short_code}")
     short_link = get_object_or_404(ShortLink, short_code=short_code)
-
-    recipe_url = reverse("recipes-detail", kwargs={"pk": short_link.recipe.id})
-    print(f"Redirecting to recipe URL: {recipe_url}")
-
+    recipe_url = f"http://damirsite.site/recipes/{short_link.recipe.id}"
+    print(f"Redirecting to {recipe_url}")
     return redirect(recipe_url)
 
 

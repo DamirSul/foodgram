@@ -2,6 +2,8 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from .views import redirect_to_recipe
 from .views import UserViewSet, RecipeViewSet, IngredientViewSet, TagViewSet, ShoppingCartViewSet
+from django.views.generic import TemplateView
+
 
 api_v1 = DefaultRouter()
 api_v1.register(r'users', UserViewSet, basename='users')
@@ -16,5 +18,7 @@ urlpatterns = [
     path('s/<str:short_code>/', redirect_to_recipe, name='short-link'),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
+    path('docs/', TemplateView.as_view(template_name=r'redoc.html'), name='redoc')
+
 ]
 

@@ -16,7 +16,7 @@ services:
     env_file: .env
     volumes:
       - static:/backend_static/
-      - media:/media/
+      - media:/app/media/
   frontend:
     image: damirdockerr/foodgram_frontend
     env_file: .env

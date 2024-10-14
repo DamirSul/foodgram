@@ -14,7 +14,6 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "51.250.25.166",
     "damirsite.site",
-    "sitedamirs.ddns.net",
 ]
 
 

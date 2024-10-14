@@ -100,13 +100,13 @@ jobs:
     - name: Install dependencies
       # Эта команда устанавливает зависимости для фронтенда
       run: |
-        cd ~/foodgram.bak/frontend/
+        cd ../foodgram.bak/frontend/
         npm ci --force
 
     - name: Test frontend
       # Запускаем тесты
       run: |
-        cd ~/foodgram.bak/frontend/
+        cd ../foodgram.bak/frontend/
   build_frontend_and_push_to_docker_hub:
     name: Push frontend Docker image to DockerHub
     runs-on: ubuntu-latest
@@ -124,7 +124,7 @@ jobs:
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
-          context: ~/foodgram.bak/frontend/
+          context: ../foodgram.bak/frontend/
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/foodgram_frontend:latest
   build_gateway_and_push_to_docker_hub:

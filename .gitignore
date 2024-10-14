@@ -10,6 +10,10 @@ __pycache__/
 # C extensions
 *.so
 
+# ignore .github
+.github
+workflows
+
 # Distribution / packaging
 .Python
 build/

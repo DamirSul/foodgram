@@ -1,18 +1,19 @@
 from django.contrib import admin
 from django.db.models import Count
+
 from users.models import User
 from food.models import (
     ShoppingCart,
     Favorite,
     Subscription,
-    RecipeIngredient, RecipeTag,
+    RecipeIngredient,
     Recipe,
     Ingredient,
-    Tag
+    Tag,
 )
 
 admin.site.register(
-    (ShoppingCart, Favorite, Subscription, RecipeIngredient, RecipeTag),
+    (ShoppingCart, Favorite, Subscription, RecipeIngredient),
     admin.ModelAdmin,
 )
 
@@ -24,6 +25,7 @@ class UserAdmin(admin.ModelAdmin):
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
     extra = 1
+    min_num = 1
 
 
 class RecipeAdmin(admin.ModelAdmin):

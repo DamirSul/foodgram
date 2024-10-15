@@ -1,5 +1,7 @@
 from django.urls import include, path
+from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
+
 from .views import (
     UserViewSet,
     RecipeViewSet,
@@ -7,17 +9,13 @@ from .views import (
     TagViewSet,
     ShoppingCartViewSet,
 )
-from django.views.generic import TemplateView
-
 
 api_v1 = DefaultRouter()
-api_v1.register(r"users", UserViewSet, basename="users")
-api_v1.register(r"recipes", RecipeViewSet, basename="recipes")
-api_v1.register(r"ingredients", IngredientViewSet, basename="ingredients")
-api_v1.register(r"tags", TagViewSet, basename="tags")
-api_v1.register(
-    r"shopping_cart", ShoppingCartViewSet, basename="shopping_cart"
-)
+api_v1.register("users", UserViewSet, basename="users")
+api_v1.register("recipes", RecipeViewSet, basename="recipes")
+api_v1.register("ingredients", IngredientViewSet, basename="ingredients")
+api_v1.register("tags", TagViewSet, basename="tags")
+api_v1.register("shopping_cart", ShoppingCartViewSet, basename="shopping_cart")
 
 
 urlpatterns = [
@@ -25,7 +23,7 @@ urlpatterns = [
     path("auth/", include("djoser.urls")),
     path("auth/", include("djoser.urls.authtoken")),
     path(
-        "docs/",
+        "docs/openapi-schema.yml",
         TemplateView.as_view(template_name=r"redoc.html"),
         name="redoc",
     ),

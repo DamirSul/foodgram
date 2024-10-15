@@ -1,6 +1,6 @@
 from django.db import models
+from django.conf import settings
 
-from backend.settings import AUTH_USER_MODEL
 from users.models import User
 
 
@@ -40,7 +40,9 @@ class Tag(models.Model):
 
 class Recipe(models.Model):
     author = models.ForeignKey(
-        AUTH_USER_MODEL, related_name="recipes", on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        related_name="recipes",
+        on_delete=models.CASCADE,
     )
     name = models.CharField(verbose_name="Название", max_length=256)
     text = models.TextField(verbose_name="Описание")
@@ -77,10 +79,14 @@ class Recipe(models.Model):
 
 class Subscription(models.Model):
     user = models.ForeignKey(
-        AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="subscriptions"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subscriptions",
     )
     author = models.ForeignKey(
-        AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="subscribers"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subscribers",
     )
     recipes = models.ManyToManyField(
         "Recipe", related_name="subscribers", blank=True
@@ -88,22 +94,21 @@ class Subscription(models.Model):
     recipe_count = models.PositiveIntegerField(default=0)
 
     class Meta:
-        unique_together = ("user", "author")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "author"], name="unique_user_author"
+            )
+        ]
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
 
     def __str__(self):
         return f"{self.user.username} подписан на {self.author.username}"
 
-    def save(self, *args, **kwargs):
-        if self.pk is not None:
-            self.recipe_count = self.recipes.count()
-        super().save(*args, **kwargs)
-
 
 class Favorite(models.Model):
     author = models.ForeignKey(
-        AUTH_USER_MODEL,
+        settings.AUTH_USER_MODEL,
         verbose_name="Пользователь",
         on_delete=models.CASCADE,
         related_name="favorites_list",
@@ -124,7 +129,7 @@ class Favorite(models.Model):
 
 class ShoppingCart(models.Model):
     author = models.ForeignKey(
-        AUTH_USER_MODEL,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name="Название",
         max_length=124,

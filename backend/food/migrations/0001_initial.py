@@ -46,7 +46,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(max_length=64, verbose_name="Название"),
+                    models.CharField(
+                        max_length=64, verbose_name="Название"
+                    ),
                 ),
                 (
                     "measurement_unit",
@@ -74,7 +76,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(max_length=256, verbose_name="Название"),
+                    models.CharField(
+                        max_length=256, verbose_name="Название"
+                    ),
                 ),
                 ("text", models.TextField(verbose_name="Описание")),
                 (
@@ -86,13 +90,15 @@ class Migration(migrations.Migration):
                 (
                     "image",
                     models.ImageField(
-                        upload_to="recipes/images/", verbose_name="Фотография"
+                        upload_to="recipes/images/",
+                        verbose_name="Фотография",
                     ),
                 ),
                 (
                     "is_favorited",
                     models.BooleanField(
-                        default=False, verbose_name="В списке избранного"
+                        default=False,
+                        verbose_name="В списке избранного",
                     ),
                 ),
                 (
@@ -121,7 +127,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "amount",
-                    models.PositiveIntegerField(verbose_name="Количество"),
+                    models.PositiveIntegerField(
+                        verbose_name="Количество"
+                    ),
                 ),
             ],
             options={
@@ -178,7 +186,10 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("short_code", models.CharField(max_length=10, unique=True)),
+                (
+                    "short_code",
+                    models.CharField(max_length=10, unique=True),
+                ),
             ],
         ),
         migrations.CreateModel(
@@ -193,7 +204,10 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("recipe_count", models.PositiveIntegerField(default=0)),
+                (
+                    "recipe_count",
+                    models.PositiveIntegerField(default=0),
+                ),
             ],
             options={
                 "verbose_name": "Подписка",
@@ -215,7 +229,9 @@ class Migration(migrations.Migration):
                 (
                     "name",
                     models.CharField(
-                        max_length=64, unique=True, verbose_name="Название"
+                        max_length=64,
+                        unique=True,
+                        verbose_name="Название",
                     ),
                 ),
                 (
@@ -267,7 +283,8 @@ class Migration(migrations.Migration):
             model_name="shortlink",
             name="recipe",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="food.recipe"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="food.recipe",
             ),
         ),
         migrations.AddField(
@@ -294,14 +311,16 @@ class Migration(migrations.Migration):
             model_name="recipetag",
             name="recipe",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="food.recipe"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="food.recipe",
             ),
         ),
         migrations.AddField(
             model_name="recipetag",
             name="tag",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="food.tag"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="food.tag",
             ),
         ),
         migrations.AddField(
@@ -353,7 +372,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="recipe",
             name="tags",
-            field=models.ManyToManyField(to="food.Tag", verbose_name="Теги"),
+            field=models.ManyToManyField(
+                to="food.Tag", verbose_name="Теги"
+            ),
         ),
         migrations.AddField(
             model_name="favorite",

@@ -45,7 +45,9 @@ class User(AbstractUser):
         null=False,
         help_text=("Фамилия, не более 128 символов"),
     )
-    is_subscribed = models.BooleanField(default=False, verbose_name="Подписка")
+    is_subscribed = models.BooleanField(
+        default=False, verbose_name="Подписка"
+    )
     avatar = models.ImageField(
         verbose_name="Аватар", upload_to="users/", blank=True, null=True
     )

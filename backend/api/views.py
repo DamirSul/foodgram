@@ -43,6 +43,76 @@ from .serializers import (
 from .pagination import RecipePagination, SubscriptionPagination
 
 
+def check_and_create_item(
+    model,
+    filter_kwargs,
+    create_kwargs,
+    serializer_class,
+    instance,
+    request,
+    response_detail,
+):
+    if model.objects.filter(**filter_kwargs).exists():
+        return Response(
+            {"detail": response_detail["add"]},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    model.objects.create(**create_kwargs)
+    serializer = serializer_class(
+        instance, context={"request": request}
+    )
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+def add_item(
+    model, author, instance, request, response_detail, serializer_class
+):
+    if model == Subscription:
+        if author == instance:
+            return Response(
+                {"detail": "Нельзя подписаться на самого себя."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        return check_and_create_item(
+            model,
+            {"user": request.user, "author": instance},
+            {"user": request.user, "author": instance},
+            UserSerializer,
+            instance,
+            request,
+            response_detail,
+        )
+    else:
+        return check_and_create_item(
+            model,
+            {"author": author, "recipe": instance},
+            {"author": author, "recipe": instance},
+            serializer_class,
+            instance,
+            request,
+            response_detail,
+        )
+
+
+def remove_item(model, author, instance, request, response_detail):
+    if model == Subscription:
+        item = model.objects.filter(
+            user=request.user, author=instance
+        ).first()
+    else:
+        item = model.objects.filter(
+            author=author, recipe=instance
+        ).first()
+
+    if not item:
+        return Response(
+            {"detail": response_detail["remove"]},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    item.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 def handle_subscription_action(
     model,
     author,
@@ -54,64 +124,19 @@ def handle_subscription_action(
 ):
     try:
         if action_name == "add":
-            if model == Subscription:
-                if author == instance:
-                    return Response(
-                        {
-                            "detail": "Нельзя подписаться на самого себя."
-                        },
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                if model.objects.filter(
-                    user=request.user, author=instance
-                ).exists():
-                    return Response(
-                        {"detail": response_detail["add"]},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                model.objects.create(
-                    user=request.user, author=instance
-                )
-                serializer = UserSerializer(
-                    instance, context={"request": request}
-                )
-                return Response(
-                    serializer.data, status=status.HTTP_201_CREATED
-                )
-
-            else:
-                if model.objects.filter(
-                    author=author, recipe=instance
-                ).exists():
-                    return Response(
-                        {"detail": response_detail["add"]},
-                        status=status.HTTP_400_BAD_REQUEST,
-                    )
-                model.objects.create(author=author, recipe=instance)
-                serializer = serializer_class(
-                    instance, context={"request": request}
-                )
-                return Response(
-                    serializer.data, status=status.HTTP_201_CREATED
-                )
+            return add_item(
+                model,
+                author,
+                instance,
+                request,
+                response_detail,
+                serializer_class,
+            )
 
         elif action_name == "remove":
-            item = (
-                model.objects.filter(
-                    author=author, recipe=instance
-                ).first()
-                if model != Subscription
-                else model.objects.filter(
-                    user=request.user, author=instance
-                ).first()
+            return remove_item(
+                model, author, instance, request, response_detail
             )
-            if not item:
-                return Response(
-                    {"detail": response_detail["remove"]},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
-            item.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
 
     except Exception as e:
         return Response(
@@ -145,9 +170,7 @@ class UserViewSet(djoser_views.UserViewSet):
             serializer = UserSerializer(
                 user, context={"request": request}
             )
-            return Response(
-                serializer.data, status=status.HTTP_200_OK
-            )
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(
                 {"detail": "Пользователь не аутентифицирован."},
@@ -178,9 +201,7 @@ class UserViewSet(djoser_views.UserViewSet):
                 user.avatar.save(avatar_file.name, avatar_file)
                 user.save()
 
-                avatar_url = request.build_absolute_uri(
-                    user.avatar.url
-                )
+                avatar_url = request.build_absolute_uri(user.avatar.url)
 
                 return Response(
                     {"avatar": avatar_url}, status=status.HTTP_200_OK
@@ -322,9 +343,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 if is_favorited.lower() == "true":
                     queryset = queryset.filter(favorites__author=user)
                 elif is_favorited.lower() == "false":
-                    queryset = queryset.exclude(
-                        favorites__author=user
-                    )
+                    queryset = queryset.exclude(favorites__author=user)
         if self.request.query_params.get("is_favorited") in [
             "1",
             "true",
@@ -361,9 +380,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             )
 
         if recipe.author != request.user:
-            raise PermissionDenied(
-                "Вы не можете удалить чужой рецепт."
-            )
+            raise PermissionDenied("Вы не можете удалить чужой рецепт.")
 
         recipe.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -480,7 +497,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
             short_link.short_code = self.generate_short_code()
             short_link.save()
 
-        short_url = f"https://{settings.SITE_DOMAIN}/s/{short_link.short_code}"
+        short_url = (
+            f"https://{settings.SITE_DOMAIN}/s/{short_link.short_code}"
+        )
 
         return Response(
             {"short-link": short_url}, status=status.HTTP_200_OK
@@ -490,9 +509,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 def redirect_to_recipe(request, short_code):
     short_link = get_object_or_404(ShortLink, short_code=short_code)
     recipe_url = (
-        f"http://damirsite.site/recipes/{short_link.recipe.id}"
+        f"http://{settings.SITE_DOMAIN}/recipes/{short_link.recipe.id}"
     )
-    print(f"Redirecting to {recipe_url}")
     return redirect(recipe_url)
 
 
@@ -504,9 +522,9 @@ class FavoriteViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        favorite_ids = Favorite.objects.filter(
-            author=user
-        ).values_list("recipe_id", flat=True)
+        favorite_ids = Favorite.objects.filter(author=user).values_list(
+            "recipe_id", flat=True
+        )
         return Recipe.objects.filter(id__in=favorite_ids)
 
 

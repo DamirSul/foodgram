@@ -13,9 +13,13 @@ from .views import (
 api_v1 = DefaultRouter()
 api_v1.register("users", UserViewSet, basename="users")
 api_v1.register("recipes", RecipeViewSet, basename="recipes")
-api_v1.register("ingredients", IngredientViewSet, basename="ingredients")
+api_v1.register(
+    "ingredients", IngredientViewSet, basename="ingredients"
+)
 api_v1.register("tags", TagViewSet, basename="tags")
-api_v1.register("shopping_cart", ShoppingCartViewSet, basename="shopping_cart")
+api_v1.register(
+    "shopping_cart", ShoppingCartViewSet, basename="shopping_cart"
+)
 
 
 urlpatterns = [

@@ -28,7 +28,9 @@ class Tag(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["name", "slug"], name="unique_tag")
+            models.UniqueConstraint(
+                fields=["name", "slug"], name="unique_tag"
+            )
         ]
 
         verbose_name = "Тег"
@@ -103,7 +105,9 @@ class Subscription(models.Model):
         verbose_name_plural = "Подписки"
 
     def __str__(self):
-        return f"{self.user.username} подписан на {self.author.username}"
+        return (
+            f"{self.user.username} подписан на {self.author.username}"
+        )
 
 
 class Favorite(models.Model):
@@ -114,7 +118,9 @@ class Favorite(models.Model):
         related_name="favorites_list",
     )
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name="favorited_recipes"
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="favorited_recipes",
     )
 
     class Meta:
@@ -136,7 +142,9 @@ class ShoppingCart(models.Model):
         related_name="shopping_cart",
     )
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name="in_shopping_cart"
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="in_shopping_cart",
     )
 
     class Meta:
@@ -151,7 +159,9 @@ class ShoppingCart(models.Model):
 
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name="recipe_ingredients"
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="recipe_ingredients",
     )
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(verbose_name="Количество")

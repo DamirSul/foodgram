@@ -144,7 +144,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         representation["tags"] = TagSerializer(
             instance.tags.all(), many=True
         ).data
-        representation["author"] = AuthorSerializerNew(instance.author).data
+        representation["author"] = AuthorSerializerNew(
+            instance.author
+        ).data
         representation["ingredients"] = IngredientSerializerNew(
             instance.recipe_ingredients.all(), many=True
         ).data
@@ -182,7 +184,9 @@ class RecipeSerializer(serializers.ModelSerializer):
             ingredient_ids.append(ingredient_data["ingredient"]["id"])
 
             try:
-                Ingredient.objects.get(id=ingredient_data["ingredient"]["id"])
+                Ingredient.objects.get(
+                    id=ingredient_data["ingredient"]["id"]
+                )
             except Ingredient.DoesNotExist:
                 raise serializers.ValidationError(
                     "Ингредиент с таким ID не найден."
@@ -196,7 +200,9 @@ class RecipeSerializer(serializers.ModelSerializer):
                 "Поле tags не может быть пустым."
             )
         if len(tags) != len(set(tags)):
-            raise serializers.ValidationError("Теги не должны повторяться.")
+            raise serializers.ValidationError(
+                "Теги не должны повторяться."
+            )
         return tags
 
     def validate_cooking_time(self, cooking_time):
@@ -260,7 +266,9 @@ class RecipeSerializer(serializers.ModelSerializer):
             request.method in ["PUT", "PATCH"]
             and request.user != self.instance.author
         ):
-            raise PermissionDenied("Вы не можете редактировать чужой рецепт.")
+            raise PermissionDenied(
+                "Вы не можете редактировать чужой рецепт."
+            )
         return data
 
 
@@ -314,10 +322,13 @@ class UserSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
 
         if request and (
-            "subscriptions" in request.path or "subscribe" in request.path
+            "subscriptions" in request.path
+            or "subscribe" in request.path
         ):
             recipes = Recipe.objects.filter(author=instance)
-            recipes_limit = request.query_params.get("recipes_limit", None)
+            recipes_limit = request.query_params.get(
+                "recipes_limit", None
+            )
             if recipes_limit is not None:
                 try:
                     recipes_limit = int(recipes_limit)
@@ -357,7 +368,9 @@ class FavoriteSerializer(serializers.ModelSerializer):
         representation["tags"] = TagSerializer(
             instance.tags.all(), many=True
         ).data
-        representation["author"] = AuthorSerializerNew(instance.author).data
+        representation["author"] = AuthorSerializerNew(
+            instance.author
+        ).data
 
 
 class ShoppingCartSerializer(serializers.ModelSerializer):

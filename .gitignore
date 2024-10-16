@@ -13,6 +13,7 @@ __pycache__/
 # ignore .github
 .github
 workflows
+.github/workflows/
 
 # Distribution / packaging
 .Python

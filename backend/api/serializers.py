@@ -156,10 +156,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         recipe_ingredients = [
             RecipeIngredient(
                 recipe=recipe,
-                ingredient=Ingredient.objects.get(
-                    id=ingredient_data["ingredient"]["id"]
-                ),
-                amount=ingredient_data["amount"],
+                ingredient_id=ingredient_data["ingredient"]["id"],
+                amount=ingredient_data["amount"]
             )
             for ingredient_data in ingredients_data
         ]
@@ -344,16 +342,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    recipe_count = serializers.SerializerMethodField()
+    recipe_count = serializers.IntegerField(
+        source='recipe_count.count',
+        read_only=True
+    )
     recipes = RecipeSerializer(many=True)
     user = serializers.StringRelatedField()
 
     class Meta:
         model = Subscription
         fields = ["user", "recipes", "recipe_count"]
-
-    def get_recipe_count(self, obj):
-        return obj.recipes.count()
 
 
 class FavoriteSerializer(serializers.ModelSerializer):

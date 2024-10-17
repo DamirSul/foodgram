@@ -73,24 +73,16 @@ def add_item(
                 {"detail": "Нельзя подписаться на самого себя."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        data = {"user": request.user, "author": instance}
         return check_and_create_item(
-            model,
-            {"user": request.user, "author": instance},
-            {"user": request.user, "author": instance},
-            UserSerializer,
-            instance,
-            request,
-            response_detail,
+            model, data, data, UserSerializer,
+            instance, request, response_detail
         )
     else:
+        data = {"author": author, "recipe": instance}
         return check_and_create_item(
-            model,
-            {"author": author, "recipe": instance},
-            {"author": author, "recipe": instance},
-            serializer_class,
-            instance,
-            request,
-            response_detail,
+            model, data, data, serializer_class,
+            instance, request, response_detail
         )
 
 

@@ -8,6 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+
+# local settings, remove later
+
 # SECRET_KEY = (
 #     "django-insecure-!ruz42b=@6@(=l&01yc1r)21*lkgqpy@s)(4@6+oa!pnhy()^e"
 # )

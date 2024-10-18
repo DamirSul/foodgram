@@ -175,7 +175,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
             if not isinstance(amount, int) or amount < 1:
                 raise serializers.ValidationError(
-                    "Количество ингредиента должно быть целым положительным числом."
+                    "Количество ингредиента должно"
+                    "быть целым положительным числом."
                 )
 
             if ingredient_data["ingredient"]["id"] in ingredient_ids:

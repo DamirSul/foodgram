@@ -171,10 +171,13 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         ingredient_ids = []
         for ingredient_data in ingredients:
-            if ingredient_data["amount"] < 1:
+            amount = ingredient_data["amount"]
+
+            if not isinstance(amount, int) or amount < 1:
                 raise serializers.ValidationError(
-                    "Количество ингредиента должно быть больше 0."
+                    "Количество ингредиента должно быть целым положительным числом."
                 )
+
             if ingredient_data["ingredient"]["id"] in ingredient_ids:
                 raise serializers.ValidationError(
                     "Ингредиенты не должны повторяться."
@@ -182,9 +185,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             ingredient_ids.append(ingredient_data["ingredient"]["id"])
 
             try:
-                Ingredient.objects.get(
-                    id=ingredient_data["ingredient"]["id"]
-                )
+                Ingredient.objects.get(id=ingredient_data["ingredient"]["id"])
             except Ingredient.DoesNotExist:
                 raise serializers.ValidationError(
                     "Ингредиент с таким ID не найден."

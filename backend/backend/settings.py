@@ -9,12 +9,6 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
-# local settings, remove later
-
-# SECRET_KEY = (
-#     "django-insecure-!ruz42b=@6@(=l&01yc1r)21*lkgqpy@s)(4@6+oa!pnhy()^e"
-# )
-# DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -82,8 +76,6 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 DATABASES = {
     "default": {
-        # Меняем настройку Django: теперь для работы будет использоваться
-        # бэкенд postgresql
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("POSTGRES_DB", "django"),
         "USER": os.getenv("POSTGRES_USER", "django"),
@@ -92,12 +84,7 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT", 5432),
     }
 }
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
+
 
 AUTH_USER_MODEL = "users.User"
 
